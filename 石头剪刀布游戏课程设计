@@ -1,0 +1,228 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+struct wanjia{
+	int num;
+	char name[10];
+	int win,lose,draw,sum;
+};
+void main()
+{
+    char wanjia,l,d,name;
+	int choice,i,j,k,n,num;
+	int lianximoshi(char wanjia,char l,int i);
+	int duizhanmoshi(char wanjia,char d,int i);
+	    printf("         ————-—————————————————————-————-——\n");
+        printf("        |                    欢迎来到石头剪刀布游戏                       |\n");
+        printf("        |    游戏规则如下：1代表石头，2代表剪刀，3代表布。其中石头胜剪刀，|\n");
+		printf("        |剪刀胜布，布胜石头，同样的手势算打平。规则下方有三种模式，玩家可 |\n");
+		printf("        |选择练习模式，进行试玩，熟悉游戏的控制规则和流程。也可选择对战模 |\n");
+		printf("        |式，但需要进行实名登记，还有对战模式中的排行榜用积分的多少去排名 |\n");
+		printf("        |，其中赢一局的2分输一局得0分，平一局就得1分，利用公式总积分=赢局 |\n");
+		printf("        |数*2+输局数*0+平局数*1去计算总积分的大小比较排名。最后可选择退出 |\n");
+		printf("        |游戏!                                                            |\n");
+		printf("        |    游戏为三局两胜制，若其中一方赢两局或以上就是赢家，只赢一局或 |\n");
+		printf("        |一局都没赢的算输家，双方各赢一局，最后一局为平局的算打平。       |\n");
+		do
+		{
+		printf("         —————————————————————————————-———\n");
+        printf("        |                             1.练习模式                          |\n");
+		printf("        |                             2.对战模式                          |\n");
+        printf("        |                             3.退出游戏                          |\n");
+		printf("         ——————————————————————————————-——\n");
+        printf("请输入选择: ");
+		scanf("%d",&choice);
+		if(choice==3) printf("\n谢谢你的参与!\n");
+		else switch(choice){
+		    case 1:l=lianximoshi(wanjia,l,i);break;
+			case 2:
+				printf("请输入玩家总人数: ");
+		     	scanf("%d",&n);
+				for(j=1;j<=n;j++)
+				{
+                    printf("\n第%d个玩家开始游戏",j);
+				    printf("请输入身份证号码（只输入最后八位，下同）：");
+				    scanf("%d",&num);
+				    printf("请输入姓名：");
+					scanf("%s",&name);
+				    d=duizhanmoshi(wanjia,d,i);
+				}
+	            struct wanjia s[50];
+	            struct wanjia input_wanjia();
+			    void sort_wanjia(struct wanjia s[],int n);
+			    void output_wanjia(struct wanjia s[],int n);
+			    for(k=0;k<n;k++)
+				{
+	   	           printf("\n请第%d个玩家根据所玩游戏得出的数据依实填写下面的信息：\n",k+1);
+	               s[k]=input_wanjia();
+				}
+			    sort_wanjia(s,n);
+			    printf("\n                         排行榜            \n");
+			    output_wanjia(s,n);
+			    break;
+		}
+		}while(choice!=3);
+}
+int lianximoshi(char wanjia,char l,int i)
+{
+    printf("来试玩一下，熟悉三盘两胜制游戏吧! Ready? Go!\n");
+    int win=0,lose=0,draw=0;
+    for(i=1;i<=3;i++)
+	{
+	int sel,n;
+    srand((unsigned)time(NULL));
+    n=rand()%(2-0+1)+1;
+    printf("请输入1,2,3:   \n");
+	scanf("%d",&sel);
+	switch(sel)
+	{
+	case 1:
+    if(n<=1) {
+	 	printf("你出石头，电脑出石头，打平\n");
+	draw=draw+1;	break;}
+	else if(n>1&&n<=2) {
+		printf("你出石头，电脑出剪刀，你赢\n");
+	win=win+1;	break;}
+	else {
+		printf("你出石头，电脑出布，你输\n");
+	lose=lose+1;	break;}
+case 2:
+
+	if(n<=1){
+       printf("你出剪刀，电脑出石头，你输\n");
+	  lose=lose+1;break;}
+	else if(n>1&&n<=2){
+		printf("你出剪刀，电脑出剪刀，打平\n");
+	draw=draw+1;break;}
+
+	else{
+		printf("你出剪刀，电脑出布，你赢\n");
+	win=win+1;break;}
+case 3:
+
+	if(n<=1){
+		printf("你出布，电脑出石头，你赢\n");
+	win=win+1;break;}
+	else if(n>1&&n<=2){
+		printf("你出布，电脑出剪刀，你输\n");
+	lose=lose+1;break;}
+	else{
+		printf("你出布，电脑出布，打平\n");
+		draw=draw+1;break;}
+    default:printf("输入错误\n");break;
+	}
+	}
+    printf("       +++++++++++++++++++++\n");
+    printf("       +  赢局数=%d        +\n",win);
+    printf("       +  输局数=%d        +\n",lose);
+    printf("       +  平局数=%d        +\n",draw);
+    printf("       +++++++++++++++++++++\n");
+	printf(" 游戏结束! \n");
+	if(win>lose)
+	{
+		printf("\n恭喜你，你赢的了比赛!\n");
+	}
+	else if(win<lose){
+	    printf("\n不好意思，你输了，电脑赢了!\n");
+	}
+	else printf("\n平局!\n");
+	printf("\n无论你是输了，赢了或是平局，不要在意，更不要沉迷于此，这只是个游戏，志在放松你的生活压力，开心就好!\n");
+	return l;
+}
+int duizhanmoshi(char wanjia,char d,int i)
+{	
+	
+	printf("游戏就要开始了，请慎重考虑你的出手方式喔！\n");
+	int win=0,lose=0,draw=0,sum=0;
+	for(i=1;i<=3;i++)
+	{
+	int sel,n;
+    srand((unsigned)time(NULL));
+    n=rand()%(2-0+1)+1;
+    printf("请输入1,2,3:  \n");
+	scanf("%d",&sel);
+    switch(sel)
+	{
+    case 1:
+
+    if(n<=1) {
+	 	printf("你出石头，电脑出石头，打平\n");
+	draw=draw+1;	break;}
+	else if(n>1&&n<=2) {
+		printf("你出石头，电脑出剪刀，你赢\n");
+	win=win+1;	break;}
+	else {
+		printf("你出石头，电脑出布，你输\n");
+	lose=lose+1;	break;}
+case 2:
+
+	if(n<=1){
+       printf("你出剪刀，电脑出石头，你输\n");
+	  lose=lose+1;break;}
+	else if(n>1&&n<=2){
+		printf("你出剪刀，电脑出剪刀，打平\n");
+	draw=draw+1;break;}
+
+	else{
+		printf("你出剪刀，电脑出布，你赢\n");
+	win=win+1;break;}
+case 3:
+
+	if(n<=1){
+		printf("你出布，电脑出石头，你赢\n");
+	win=win+1;break;}
+	else if(n>1&&n<=2){
+		printf("你出布，电脑出剪刀，你输\n");
+	lose=lose+1;break;}
+	else{
+		printf("你出布，电脑出布，打平\n");
+		draw=draw+1;break;}
+default:
+	printf("输入错误\n");break;
+	}
+	}
+	sum=win*2+lose*0+draw*1;
+    printf("       +++++++++++++++++++++\n");
+    printf("       +  赢局数=%d        +\n",win);
+    printf("       +  输局数=%d        +\n",lose);
+    printf("       +  平局数=%d        +\n",draw);
+    printf("       +  总积分sum=%d     +\n",sum);
+    printf("       +++++++++++++++++++++\n");
+	printf(" 游戏结束! ");
+	if(win>lose)
+	{
+		printf("\n恭喜你，你赢的了比赛!\n");
+	}
+	else if(win<lose){
+	    printf("\n不好意思，你输了，电脑赢了!\n");
+	}
+	else printf("\n平局!\n");
+	printf("\n无论你是输了，赢了或是平局，不要在意，更不要沉迷于此，这只是个游戏，志在放松你的生活压力，开心就好!\n");
+	return d;
+}
+struct wanjia input_wanjia()
+{
+	struct wanjia s;
+	printf("\n身份证号码 姓名 赢局数 输局数 平局数 ：");
+	scanf("%d%s%d%d%d",&s.num,&s.name,&s.win,&s.lose,&s.draw);
+	s.sum=s.win*2+s.lose*0+s.draw*1;
+	return s;
+}
+void sort_wanjia(struct wanjia s[],int n)
+{
+	int i,j,index;
+	struct wanjia temp;
+	for(i=0;i<n-1;i++)
+	{
+		index=i;
+		for(j=i;j<n;j++) if(s[j].sum>s[index].sum) index=j;
+		temp=s[i];s[i]=s[index];s[index]=temp;
+	}
+}
+void output_wanjia (struct wanjia s[],int n)
+{
+	int i;
+	printf("身份证号码   姓名       赢局数   输局数   平局数   总积分\n");
+	for(i=0;i<n;i++) printf("%-13d%-13s%-9d%-9d%-9d%-9d\n",s[i].num,s[i].name,s[i].win,s[i].lose,s[i].draw,s[i].sum);
+}
+
